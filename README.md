@@ -2,7 +2,7 @@
 
 The program for downloading content from the rule34.xxx. Used rule34.xxx API.
 
-### Download installer: https://files.fm/f/y3pe9xnj
+### Download installer: https://files.fm/f/g6ax4cqt
 
 ###### Required [.NET Framework 4.7.1](https://www.microsoft.com/net/download/dotnet-framework-runtime)
 
