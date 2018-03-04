@@ -1,8 +1,15 @@
-# Rule34.xxx-Downloader
+# Rule34.xxx Downloader v.1.0.2
 
 The program for downloading content from the rule34.xxx. Used rule34.xxx API.
 
-Screenshots:
-https://i.imgur.com/9fWteq9.png
-https://i.imgur.com/JaiG6tk.png
-https://i.imgur.com/TcbQhI4.png
+### Download installer: https://files.fm/f/y3pe9xnj
+
+###### Required [.NET Framework 4.7.1](https://www.microsoft.com/net/download/dotnet-framework-runtime)
+
+# Screenshots
+
+![alt text](https://i.imgur.com/9fWteq9.png "")
+
+![alt text](https://i.imgur.com/JaiG6tk.png "")
+
+![alt text](https://i.imgur.com/TcbQhI4.png "")
