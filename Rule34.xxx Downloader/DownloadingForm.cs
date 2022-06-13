@@ -16,14 +16,14 @@ namespace R34Downloader
 
         private void DownloadingForm_Load(object sender, EventArgs e)
         {
-            if (maxPid < 11111)
+            if (maxPid < 500000)
             {
                 trackBar1.Maximum = maxPid;
                 numericUpDown1.Maximum = maxPid;
             }
             else
             {
-                label2.Text = "11111 max ;)";
+                label2.Text = "500000 maximum";
             }
         }
 
