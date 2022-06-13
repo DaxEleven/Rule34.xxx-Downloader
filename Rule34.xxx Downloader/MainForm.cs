@@ -151,7 +151,7 @@ namespace R34Downloader
                             }
                             else
                             {
-                                dlf = new DownloadingForm(11111);
+                                dlf = new DownloadingForm(500000);
                             }
                             dlf.ShowDialog();
 
