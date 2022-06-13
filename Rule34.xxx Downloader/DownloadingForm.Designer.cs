@@ -61,7 +61,7 @@ namespace R34Downloader
             // 
             this.trackBar1.AutoSize = false;
             this.trackBar1.Location = new System.Drawing.Point(108, 28);
-            this.trackBar1.Maximum = 11111;
+            this.trackBar1.Maximum = 500000;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(352, 23);
@@ -75,7 +75,7 @@ namespace R34Downloader
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.numericUpDown1.Location = new System.Drawing.Point(347, 7);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            11111,
+            500000,
             0,
             0,
             0});
