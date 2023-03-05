@@ -214,7 +214,7 @@ namespace R34Downloader.Forms
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/Dax-Eleven/Rule34.xxx-Downloader");
+            Process.Start("https://github.com/DaxEleven/Rule34.xxx-Downloader");
         }
 
         #endregion
