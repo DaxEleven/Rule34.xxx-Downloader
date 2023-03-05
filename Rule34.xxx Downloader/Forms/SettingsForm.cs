@@ -1,19 +1,31 @@
-﻿using R34Downloader.Logic;
+﻿using R34Downloader.Models;
 using System;
 using System.Windows.Forms;
 
-namespace R34Downloader
+namespace R34Downloader.Forms
 {
+    /// <summary>
+    /// Settings form.
+    /// </summary>
     public partial class SettingsForm : Form
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the SettingsForm class.
+        /// </summary>
         public SettingsForm()
         {
             InitializeComponent();
         }
 
+        #endregion
+
+        #region Handlers
+
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            if (Transfer.IsAPI)
+            if (SettingsModel.IsApi)
             {
                 radioButton1.Checked = true;
             }
@@ -25,12 +37,14 @@ namespace R34Downloader
 
         private void radioButton_MouseClick(object sender, MouseEventArgs e)
         {
-            Transfer.IsAPI = radioButton1.Checked ? true : false;
+            SettingsModel.IsApi = radioButton1.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Close();
         }
+
+        #endregion
     }
 }

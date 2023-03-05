@@ -1,12 +1,13 @@
-﻿using System;
+﻿using R34Downloader.Forms;
+using System;
 using System.Windows.Forms;
 
 namespace R34Downloader
 {
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

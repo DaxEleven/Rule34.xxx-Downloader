@@ -1,33 +1,46 @@
-﻿using R34Downloader.Logic;
+﻿using R34Downloader.Models;
+using R34Downloader.Services;
 using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace R34Downloader
+namespace R34Downloader.Forms
 {
+    /// <summary>
+    /// Main form.
+    /// </summary>
     public partial class MainForm : Form
     {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the MainForm class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
         }
 
+        #endregion
+
+        #region Handlers
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            Transfer.IsAPI = true;
+            SettingsModel.IsApi = true;
             toolStripStatusLabel1.Text = "Welcome!";
             toolStripStatusLabel2.Text = "0 / 0";
 
-            if (Properties.Settings.Default.Path != null || Properties.Settings.Default.Path != "")
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.Path))
             {
                 folderBrowserDialog1.SelectedPath = Properties.Settings.Default.Path;
             }
 
             if (!CheckForInternetConnection("https://rule34.xxx"))
             {
-                if (MessageBox.Show("You are offline please check your internet connection", "Unable to connect to the Rule34.xxx", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                if (MessageBox.Show("You are offline, please check your internet connection", "Failed to connect to Rule34.xxx", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                 {
                     Form1_Load(sender, e);
                 }
@@ -43,10 +56,10 @@ namespace R34Downloader
             try
             {
                 toolStripStatusLabel1.Text = "Searching...";
-                string request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
-                if (Transfer.IsAPI)
+                var request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
+                if (SettingsModel.IsApi)
                 {
-                    int countContent = R34API.GetCountContent(request);
+                    var countContent = R34ApiService.GetContentCount(request);
                     if (countContent > 0)
                     {
                         toolStripStatusLabel1.Text = "Search completed";
@@ -63,9 +76,9 @@ namespace R34Downloader
                 }
                 else // If parsing method
                 {
-                    if (R34Parser.IsSomethingFound(request))
+                    if (R34HtmlService.IsSomethingFound(request))
                     {
-                        int countContent = R34Parser.GetCountContent(request, R34Parser.GetMaxPid(request));
+                        var countContent = R34HtmlService.GetCountContent(request, R34HtmlService.GetMaxPid(request));
                         if (countContent > 0)
                         {
                             toolStripStatusLabel1.Text = "Search completed";
@@ -98,10 +111,10 @@ namespace R34Downloader
         {
             try
             {
-                string request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
-                if (Transfer.IsAPI)
+                var request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
+                if (SettingsModel.IsApi)
                 {
-                    int countContent = R34API.GetCountContent(request);
+                    var countContent = R34ApiService.GetContentCount(request);
                     if (countContent > 0)
                     {
                         if (folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
@@ -109,17 +122,17 @@ namespace R34Downloader
                             Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
                             Properties.Settings.Default.Save();
 
-                            DownloadingForm dlf = new DownloadingForm(countContent);
-                            dlf.ShowDialog();
+                            var downloadingForm = new DownloadingForm((ushort)countContent);
+                            downloadingForm.ShowDialog();
 
-                            if (Transfer.Limit > 0)
+                            if (SettingsModel.Limit > 0)
                             {
                                 toolStripStatusLabel1.Text = "Downloading content...";
-                                toolStripProgressBar1.Maximum = Transfer.Limit;
+                                toolStripProgressBar1.Maximum = SettingsModel.Limit;
 
                                 var progress = new Progress<int>(s => toolStripProgressBar1.Value = s);
-                                var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + Transfer.Limit);
-                                await Task.Factory.StartNew(() => R34API.DownloadContent(request, folderBrowserDialog1.SelectedPath, progress, progress2, Transfer.Limit), TaskCreationOptions.LongRunning);
+                                var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + SettingsModel.Limit);
+                                await Task.Factory.StartNew(() => R34ApiService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2), TaskCreationOptions.LongRunning);
 
                                 toolStripStatusLabel1.Text = "Download completed";
                                 if (MessageBox.Show("Download completed! Open the folder?", "Download completed", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -136,33 +149,25 @@ namespace R34Downloader
                 }
                 else // If parsing method
                 {
-                    if (R34Parser.IsSomethingFound(request))
+                    if (R34HtmlService.IsSomethingFound(request))
                     {
                         if (folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
                         {
                             Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
                             Properties.Settings.Default.Save();
 
-                            int countContent = R34Parser.GetCountContent(request, R34Parser.GetMaxPid(request));
-                            DownloadingForm dlf;
-                            if (countContent > 0)
-                            {
-                                dlf = new DownloadingForm(countContent);
-                            }
-                            else
-                            {
-                                dlf = new DownloadingForm(11111);
-                            }
-                            dlf.ShowDialog();
+                            var countContent = R34HtmlService.GetCountContent(request, R34HtmlService.GetMaxPid(request));
+                            var downloadingForm = countContent > 0 ? new DownloadingForm((ushort)countContent) : new DownloadingForm(ushort.MaxValue);
+                            downloadingForm.ShowDialog();
 
-                            if (Transfer.Limit > 0)
+                            if (SettingsModel.Limit > 0)
                             {
                                 toolStripStatusLabel1.Text = "Downloading content...";
-                                toolStripProgressBar1.Maximum = Transfer.Limit;
+                                toolStripProgressBar1.Maximum = SettingsModel.Limit;
 
                                 var progress = new Progress<int>(s => toolStripProgressBar1.Value = s);
-                                var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + Transfer.Limit);
-                                await Task.Factory.StartNew(() => R34Parser.DownloadPages(request, folderBrowserDialog1.SelectedPath, progress, progress2, Transfer.Limit), TaskCreationOptions.LongRunning);
+                                var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + SettingsModel.Limit);
+                                await Task.Factory.StartNew(() => R34HtmlService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2), TaskCreationOptions.LongRunning);
 
                                 toolStripStatusLabel1.Text = "Download completed";
                                 if (MessageBox.Show("Download completed. Open the folder?", "Download completed", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
@@ -187,19 +192,19 @@ namespace R34Downloader
 
         private void button3_Click(object sender, EventArgs e) // About Button
         {
-            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: r34dlnew\nVersion: 1.0.2", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: Dax Eleven\nVersion: 1.0.3", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button4_Click(object sender, EventArgs e) // Help Button
         {
-            string searchHelpMessage = "You can use:\n'*' all,\n(' ' or '+') union,\n'-' remove;\n\nFor example:\n > \"rainbow *\" - search for all tags starting with \"rainbow\"\n      rainbow_dash_(mlp)\n      rainbow_fur\n      rainbow_tail\n\n > \"mercy pharah animated\" - posts where there is \"mercy\", \"pharah\" and \"animated\" at the same time\n     \"fallout+elizabeth\"\n\n > \"tomb_raider -dickgirl -zoophilia\" - posts where there is \"tomb_raider\", but no \"dickgirl\" and \"zoophilia\"";
+            const string searchHelpMessage = "You can use:\n'*' all,\n(' ' or '+') union,\n'-' remove;\n\nFor example:\n > \"rainbow *\" - search for all tags starting with \"rainbow\"\n      rainbow_dash_(mlp)\n      rainbow_fur\n      rainbow_tail\n\n > \"mercy pharah animated\" - posts where there is \"mercy\", \"pharah\" and \"animated\" at the same time\n     \"fallout+elizabeth\"\n\n > \"tomb_raider -dickgirl -zoophilia\" - posts where there is \"tomb_raider\", but no \"dickgirl\" and \"zoophilia\"";
             MessageBox.Show(searchHelpMessage, "Search help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void pictureBox2_Click(object sender, EventArgs e) // Settings Button
         {
-            SettingsForm sf = new SettingsForm();
-            sf.ShowDialog();
+            var settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) // Link to rule34.xxx
@@ -207,13 +212,22 @@ namespace R34Downloader
             Process.Start("https://rule34.xxx");
         }
 
-        public static bool CheckForInternetConnection(string siteName)
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/Dax-Eleven/Rule34.xxx-Downloader");
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private static bool CheckForInternetConnection(string address)
         {
             try
             {
                 using (var client = new WebClient())
                 {
-                    using (var stream = client.OpenRead(siteName))
+                    using (client.OpenRead(address))
                     {
                         return true;
                     }
@@ -224,5 +238,7 @@ namespace R34Downloader
                 return false;
             }
         }
+
+        #endregion
     }
 }

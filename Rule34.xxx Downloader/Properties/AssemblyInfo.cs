@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Rule34.xxx Downloader")]
 [assembly: AssemblyDescription("The program for downloading content from the rule34.xxx")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Dax Eleven")]
 [assembly: AssemblyProduct("Rule34.xxx Downloader")]
-[assembly: AssemblyCopyright("Copyright © 2017-2018")]
+[assembly: AssemblyCopyright("Copyright © 2017-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]
 [assembly: NeutralResourcesLanguage("en")]
 

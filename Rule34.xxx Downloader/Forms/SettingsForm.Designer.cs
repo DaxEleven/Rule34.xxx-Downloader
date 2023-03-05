@@ -1,4 +1,4 @@
-﻿namespace R34Downloader
+﻿namespace R34Downloader.Forms
 {
     partial class SettingsForm
     {
@@ -86,7 +86,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(226)))), ((int)(((byte)(145)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(229)))), ((int)(((byte)(164)))));
             this.ClientSize = new System.Drawing.Size(255, 137);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
