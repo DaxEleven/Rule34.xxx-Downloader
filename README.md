@@ -4,7 +4,7 @@ The program for downloading content from the rule34.xxx. Used rule34.xxx API.
 
 ### Download: [R34Downloader.zip](https://github.com/DaxEleven/Rule34.xxx-Downloader/releases/download/1.0.3/R34Downloader.zip)
 
-###### Required [.NET Framework 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
+###### Required [.NET Framework 4.8.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481) *most likely you have this unless you are that ancient dinosaur that uses Windows 7 without updates
 
 # Screenshots
 
