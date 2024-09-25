@@ -33,6 +33,12 @@ namespace R34Downloader.Forms
             {
                 radioButton2.Checked = true;
             }
+
+            textBoxAria2ServerUrl.Text = SettingsModel.Aria2ServerUrl;
+            textBoxAria2SecretToken.Text = SettingsModel.Aria2SecretToken;
+            checkBoxUseAria2.Checked = SettingsModel.UseAria2;
+
+            ToggleAria2Fields(SettingsModel.UseAria2);
         }
 
         private void radioButton_MouseClick(object sender, MouseEventArgs e)
@@ -40,9 +46,26 @@ namespace R34Downloader.Forms
             SettingsModel.IsApi = radioButton1.Checked;
         }
 
+        private void checkBoxUseAria2_CheckedChanged(object sender, EventArgs e)
+        {
+            SettingsModel.UseAria2 = checkBoxUseAria2.Checked;
+            ToggleAria2Fields(checkBoxUseAria2.Checked);
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+            SettingsModel.Aria2ServerUrl = textBoxAria2ServerUrl.Text;
+            SettingsModel.Aria2SecretToken = textBoxAria2SecretToken.Text;
+            SettingsModel.UseAria2 = checkBoxUseAria2.Checked;
             Close();
+        }
+
+        private void ToggleAria2Fields(bool isVisible)
+        {
+            textBoxAria2ServerUrl.Visible = isVisible;
+            textBoxAria2SecretToken.Visible = isVisible;
+            labelAria2ServerUrl.Visible = isVisible;
+            labelAria2SecretToken.Visible = isVisible;
         }
 
         #endregion

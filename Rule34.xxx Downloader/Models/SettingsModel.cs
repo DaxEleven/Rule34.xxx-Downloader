@@ -29,5 +29,20 @@
         /// Parsing method flag.
         /// </summary>
         public static bool IsApi { get; set; }
+
+        /// <summary>
+        /// Aria2 server URL.
+        /// </summary>
+        public static string Aria2ServerUrl { get; set; }
+
+        /// <summary>
+        /// Aria2 secret token for authentication.
+        /// </summary>
+        public static string Aria2SecretToken { get; set; }
+
+        /// <summary>
+        /// Flag for enabling or disabling aria2.
+        /// </summary>
+        public static bool UseAria2 { get; set; }
     }
 }
