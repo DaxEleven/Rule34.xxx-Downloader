@@ -1,6 +1,11 @@
-﻿using R34Downloader.Models;
+﻿using Newtonsoft.Json;
+using R34Downloader.Models;
 using System;
+using System.Drawing.Printing;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace R34Downloader.Services
@@ -41,7 +46,9 @@ namespace R34Downloader.Services
         /// <param name="quantity">Quantity.</param>
         /// <param name="progress"><see cref="IProgress{T}"/></param>
         /// <param name="progress2"><see cref="IProgress{T}"/></param>
-        public static void DownloadContent(string path, string tags, ushort quantity, IProgress<int> progress, IProgress<int> progress2)
+        /// <param name="useAria2">Use aria2 for downloading.</param>
+        /// <param name="aria2ServerUrl">Aria2 server URL.</param>
+        public static void DownloadContent(string path, string tags, ushort quantity, IProgress<int> progress, IProgress<int> progress2, bool useAria2 = false)
         {
             var maxPid = quantity <= PageSize ? 1 : quantity % PageSize == 0 ? quantity / PageSize - 1 : quantity / PageSize;
 
@@ -58,17 +65,30 @@ namespace R34Downloader.Services
 
                     if (url != null)
                     {
+                        var filePath = string.Empty;
                         if ((url.Contains(".mp4") || url.Contains(".webm")) && SettingsModel.Video)
                         {
-                            DownloadService.Download(url, Path.Combine(path, "Video", filename));
+                            filePath = Path.Combine(path, "Video", filename);
                         }
                         else if (url.Contains(".gif") && SettingsModel.Gif)
                         {
-                            DownloadService.Download(url, Path.Combine(path, "Gif", filename));
+                            filePath = Path.Combine(path, "Gif", filename);
                         }
                         else if (!url.Contains(".mp4") && !url.Contains(".webm") && !url.Contains(".gif") && SettingsModel.Images)
                         {
-                            DownloadService.Download(url, Path.Combine(path, "Images", filename));
+                            filePath = Path.Combine(path, "Images", filename);
+                        }
+
+                        if (!string.IsNullOrEmpty(filePath))
+                        {
+                            if (useAria2 && !string.IsNullOrEmpty(SettingsModel.Aria2ServerUrl))
+                            {
+                                DownloadWithAria2(url, filePath, SettingsModel.Aria2ServerUrl, SettingsModel.Aria2SecretToken).Wait();
+                            }
+                            else
+                            {
+                                DownloadService.Download(url, filePath);
+                            }
                         }
                     }
 
@@ -76,6 +96,50 @@ namespace R34Downloader.Services
                     progress.Report(reportStatus);
                     progress2.Report(reportStatus);
                 }
+            }
+        }
+
+        private static async Task DownloadWithAria2(string url, string filePath, string aria2ServerUrl, string aria2SecretToken)
+        {
+            using (var client = new HttpClient())
+            {
+                var jsonPayload = new
+                {
+                    jsonrpc = "2.0",
+                    method = "aria2.addUri",
+                    id = "1",
+                    @params = new object[]
+                    {
+                            new string[] { url },
+                            new
+                            {
+                                @out = Path.GetFileName(filePath)
+                            }
+                    }
+                };
+
+                if (!string.IsNullOrEmpty(aria2SecretToken))
+                {
+                    jsonPayload = new
+                    {
+                        jsonrpc = "2.0",
+                        method = "aria2.addUri",
+                        id = "1",
+                        @params = new object[]
+                        {
+                                "token:" + aria2SecretToken,
+                                new string[] { url },
+                                new
+                                {
+                                    @out = Path.GetFileName(filePath)
+                                }
+                        }
+                    };
+                }
+
+                var content = new StringContent(JsonConvert.SerializeObject(jsonPayload), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(aria2ServerUrl, content);
+                response.EnsureSuccessStatusCode();
             }
         }
 
