@@ -117,10 +117,13 @@ namespace R34Downloader.Forms
                     var countContent = R34ApiService.GetContentCount(request);
                     if (countContent > 0)
                     {
-                        if (folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
+                        if (SettingsModel.UseAria2 || folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
                         {
-                            Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
-                            Properties.Settings.Default.Save();
+                            if (!SettingsModel.UseAria2) // If not using aria2
+                            {
+                                Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
+                                Properties.Settings.Default.Save();
+                            }
 
                             var downloadingForm = new DownloadingForm((ushort)countContent);
                             downloadingForm.ShowDialog();
@@ -132,7 +135,7 @@ namespace R34Downloader.Forms
 
                                 var progress = new Progress<int>(s => toolStripProgressBar1.Value = s);
                                 var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + SettingsModel.Limit);
-                                await Task.Factory.StartNew(() => R34ApiService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2), TaskCreationOptions.LongRunning);
+                                await Task.Factory.StartNew(() => R34ApiService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2, SettingsModel.UseAria2), TaskCreationOptions.LongRunning);
 
                                 toolStripStatusLabel1.Text = "Download completed";
                                 if (MessageBox.Show("Download completed! Open the folder?", "Download completed", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
