@@ -13,9 +13,8 @@ Although using a certain filter when searching you can get safe content (`rating
 ---
 
 # Screenshots
+![image](https://github.com/user-attachments/assets/c9382068-f449-42ef-8567-85bdcb9aeddf)
 
-![image](https://user-images.githubusercontent.com/37029321/222939955-e7748d9b-54d4-445a-bb97-e71a4830ba14.png)
+![image](https://github.com/user-attachments/assets/f505f0c9-4d9d-4019-90d7-de0ee6d0d35a)
 
-![image](https://user-images.githubusercontent.com/37029321/222939967-58c1db98-20ce-4e23-9e40-b6dac12adebd.png)
-
-![image](https://user-images.githubusercontent.com/37029321/222939972-b6b35d19-9e95-4564-9162-d2ebb46c69d6.png)
+![image](https://github.com/user-attachments/assets/8ce7044b-891b-4008-8090-247c223bf71c)
