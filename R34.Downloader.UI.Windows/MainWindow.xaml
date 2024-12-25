@@ -1,0 +1,288 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:R34.Downloader.UI.Windows.ViewModels"
+        xmlns:converters="clr-namespace:R34.Downloader.UI.Windows.Converters"
+        xmlns:api="clr-namespace:R34.Downloader.Domain.Models.Api;assembly=R34.Downloader.Domain"
+        x:Class="R34.Downloader.UI.Windows.MainWindow"
+        mc:Ignorable="d"
+        Title="R34 Downloader"
+        Height="600"
+        Width="500"
+        FontWeight="Light"
+        Closing="Window_Closing">
+    <Window.Resources>
+
+        <Style x:Key="VisualStudioButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                                BorderThickness="1"
+                                Width="Auto"
+                                SnapsToDevicePixels="True"
+                                Height="23"
+                                Padding="0,0,0,1"
+                                BorderBrush="#FFACACAC" 
+                                Background="#FFECECF0">
+                            <ContentPresenter Name="content"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              TextBlock.Foreground="#FF1E1E1E"
+                                              TextBlock.FontSize="12" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FFC9DEF5" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF3399FF" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF3399FF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF007ACC" />
+                                <Setter TargetName="border" Property="Background" Value="#FF007ACC" />
+                                <Setter TargetName="content" Property="TextBlock.Foreground" Value="#FFFFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FFCCCEDB" />
+                                <Setter TargetName="border" Property="Background" Value="#FFF5F5F5" />
+                                <Setter TargetName="content" Property="TextBlock.Foreground" Value="#FFA2A4A5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate TargetType="{x:Type TextBox}" x:Key="SearchTextBoxTemplate">
+            <TextBox Text="{TemplateBinding Text}" />
+        </ControlTemplate>
+
+        <!--<converters:TagTypeConverter x:Key="TagTypeConverter" />-->
+        
+    </Window.Resources>
+
+    <Window.FontFamily>
+        <StaticResource ResourceKey="Poppins"/>
+    </Window.FontFamily>
+
+    <Window.Foreground>
+        <DynamicResource ResourceKey="FontColor"/>
+    </Window.Foreground>
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0.2,0" EndPoint="0.8,1">
+            <GradientStop Color="{DynamicResource BackgroundGradientColor1}" Offset="0.0" />
+            <GradientStop Color="{DynamicResource BackgroundGradientColor2}" Offset="0.25" />
+            <GradientStop Color="{DynamicResource BackgroundGradientColor3}" Offset="0.50" />
+            <GradientStop Color="{DynamicResource BackgroundGradientColor4}" Offset="0.75" />
+            <GradientStop Color="{DynamicResource BackgroundGradientColor5}" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid Margin="10,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0"
+                   Source="/Resources/Images/header.png"
+                   MaxHeight="386"
+                   MaxWidth="700"/>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="SearchTextBox"
+                                 GotFocus="SearchTextBox_OnGotFocus"
+                                 LostFocus="SearchTextBox_OnLostFocus"
+                                 MouseDown="SearchTextBox_OnMouseDown"
+                                 Grid.Row="0"/>
+                        <Popup x:Name="SearchPopup" Grid.Row="1">
+                            <ListBox x:Name="SearchListBox"
+                                 SelectionChanged="SearchListBox_OnSelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type api:TagAutocompleteModel}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Label}" />
+                                            <!--<TextBlock Text="{Binding Label}" Foreground="{Binding Type, Converter={StaticResource TagTypeConverter}}" />-->
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Popup>
+                    </Grid>
+
+
+                    <Label x:Name="MaxQuantityLabel"
+                           Grid.Column="1"
+                           Content="{Binding MaxQuantity, UpdateSourceTrigger=PropertyChanged}" />
+
+                </Grid>
+
+                <GroupBox x:Name="ContentTypeGroupBox"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.RowSpan="2"
+                          Header=" Content type: " >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <CheckBox x:Name="ImagesCheckBox"
+                                  Grid.Row="0"
+                                  IsChecked="{Binding IncludeImages, UpdateSourceTrigger=PropertyChanged}"
+                                  Content="Images" />
+                        <CheckBox x:Name="GifsCheckBox"
+                                  Grid.Row="1"
+                                  IsChecked="{Binding IncludeGifs, UpdateSourceTrigger=PropertyChanged}"
+                                  Content="Gifs" />
+                        <CheckBox x:Name="VideoCheckBox"
+                                  Grid.Row="2"
+                                  IsChecked="{Binding IncludeVideo, UpdateSourceTrigger=PropertyChanged}"
+                                  Content="Video" />
+                    </Grid>
+                </GroupBox>
+                <Button x:Name="OpenInBrowserButton"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource VisualStudioButtonStyle}"
+                    Content="Open in browser" Click="OpenInBrowserButton_Click" />
+                <Button x:Name="HelpButton"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource VisualStudioButtonStyle}"
+                    Content="Help" Click="HelpButton_Click" />
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <CheckBox x:Name="FullQualityCheckBox"
+                          Grid.Row="0"
+                          IsChecked="{Binding DownloadContentInMaxQuality, UpdateSourceTrigger=PropertyChanged}"
+                          Content="Download content in maximum quality" />
+
+                <StackPanel Grid.Row="1"
+                        Orientation="Horizontal">
+                    <Label x:Name="QuantityLabel"
+                       Content="Quantity:" />
+                    <TextBox x:Name="QuantityTextBox"
+                             Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                         Width="50" />
+                </StackPanel>
+                <Slider x:Name="QuantitySlider"
+                        Grid.Row="2"
+                        Minimum="1"
+                        Maximum="{Binding QuantitySliderMaximum, UpdateSourceTrigger=PropertyChanged}"
+                        Value="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                        SmallChange="1"
+                        LargeChange="10" />
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <Label x:Name="SaveToLabel"
+                           Content="Save to:" />
+                    <TextBox x:Name="SaveToTextBox"
+                             Text="{Binding SavePath, UpdateSourceTrigger=PropertyChanged}"
+                             HorizontalAlignment="Stretch"
+                             IsEnabled="False"
+                             AllowDrop="False"
+                             Focusable="False"
+                             IsTabStop="False" />
+                </DockPanel>
+
+                <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                    <Button x:Name="OpenButton"
+                        Content="Open" Click="OpenButton_Click" />
+                    <Button x:Name="SelectButton"
+                        Content="Select" Click="SelectButton_Click" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0">
+                    <Button x:Name="DownloadButton"
+                        DockPanel.Dock="Right"
+                        Content="Download" Click="DownloadButton_Click" />
+                    <ProgressBar x:Name="DownloadProgressBar" />
+                </DockPanel>
+
+                <DockPanel Grid.Row="1">
+                    <Label x:Name="DownloadedLabel"
+                       Content="Downloaded:" />
+                    <Label x:Name="DownloadedNumberLabel"
+                       Content="0" />
+                </DockPanel>
+
+                <DockPanel Grid.Row="2">
+                    <Label x:Name="SkippedLabel"
+                       Content="Skipped:" />
+                    <Label x:Name="SkippedNumberLabel"
+                       Content="0" />
+                </DockPanel>
+            </Grid>
+        </Grid>
+
+        <Label x:Name="AboutLabel"
+               DockPanel.Dock="Bottom"
+               Content="About R34 Downloader 2.0"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right" FontSize="10" MouseLeftButtonUp="AboutLabel_MouseLeftButtonUp" />
+    </Grid>
+</Window>

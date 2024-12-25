@@ -1,0 +1,13 @@
+﻿<Application x:Class="R34.Downloader.UI.Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:R34.Downloader.UI.Windows"
+             StartupUri="MainWindow.xaml"
+             Deactivated="App_OnDeactivated">
+    <Application.Resources>
+        <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Fonts/#Poppins</FontFamily>
+
+        <ResourceDictionary x:Key="LightTheme" Source="Resources/Themes/Light.xaml" />
+
+    </Application.Resources>
+</Application>

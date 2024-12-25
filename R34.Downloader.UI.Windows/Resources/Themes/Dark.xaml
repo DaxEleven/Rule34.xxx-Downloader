@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="FontColor">#c8c3bf</SolidColorBrush>
+
+    <Color x:Key="BackgroundGradientColor1">#220807</Color>
+    <Color x:Key="BackgroundGradientColor2">#310d0d</Color>
+    <Color x:Key="BackgroundGradientColor3">#411013</Color>
+    <Color x:Key="BackgroundGradientColor4">#501416</Color>
+    <Color x:Key="BackgroundGradientColor5">#5e181a</Color>
+
+    <SolidColorBrush x:Key="SearchComboBoxItemFontColorMetadata">#FF8800</SolidColorBrush>
+    <SolidColorBrush x:Key="SearchComboBoxItemFontColorCopyright">#AA00AA</SolidColorBrush>
+    <SolidColorBrush x:Key="SearchComboBoxItemFontColorCharacter">#00AA00</SolidColorBrush>
+    <SolidColorBrush x:Key="SearchComboBoxItemFontColorArtist">#AA0000</SolidColorBrush>
+</ResourceDictionary>
