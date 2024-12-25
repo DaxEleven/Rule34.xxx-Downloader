@@ -2,7 +2,7 @@
 using R34Downloader.Services;
 using System;
 using System.Diagnostics;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -192,7 +192,7 @@ namespace R34Downloader.Forms
 
         private void button3_Click(object sender, EventArgs e) // About Button
         {
-            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: Dax Eleven\nVersion: 1.0.3", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: Dax Eleven\nVersion: 1.0.4", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button4_Click(object sender, EventArgs e) // Help Button
@@ -225,12 +225,12 @@ namespace R34Downloader.Forms
         {
             try
             {
-                using (var client = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    using (client.OpenRead(address))
-                    {
-                        return true;
-                    }
+                    var responseTask = client.GetAsync(address);
+                    var response = responseTask.GetAwaiter().GetResult();
+
+                    return response.IsSuccessStatusCode;
                 }
             }
             catch

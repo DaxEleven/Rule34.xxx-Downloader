@@ -53,20 +53,22 @@ namespace R34Downloader.Services
                 var postCount = quantity - pid * PageSize < PageSize ? quantity - pid * PageSize : PageSize;
                 for (var i = 0; i < postCount; i++)
                 {
-                    var url = doc.DocumentElement?.ChildNodes[i].Attributes?[2].Value;
-                    var filename = doc.DocumentElement?.ChildNodes[i].Attributes?[10].Value + url?.Substring(url.LastIndexOf('.'), url.Length - url.LastIndexOf('.'));
+                    var url = doc.DocumentElement?.ChildNodes[i].Attributes?.GetNamedItem("file_url")?.Value;
+                    var fileExtension = Path.GetExtension(url);
+                    var filename = doc.DocumentElement?.ChildNodes[i].Attributes?.GetNamedItem("id")?.Value + fileExtension;
 
                     if (url != null)
                     {
-                        if ((url.Contains(".mp4") || url.Contains(".webm")) && SettingsModel.Video)
+                        if ((fileExtension == ".mp4" || fileExtension == ".webm") && SettingsModel.Video)
                         {
-                            DownloadService.Download(url, Path.Combine(path, "Video", filename));
+                            var sampleUrl = doc.DocumentElement?.ChildNodes[i].Attributes?.GetNamedItem("sample_url")?.Value ?? url;
+                            DownloadService.Download(sampleUrl, Path.Combine(path, "Video", filename));
                         }
-                        else if (url.Contains(".gif") && SettingsModel.Gif)
+                        else if (fileExtension == ".gif" && SettingsModel.Gif)
                         {
                             DownloadService.Download(url, Path.Combine(path, "Gif", filename));
                         }
-                        else if (!url.Contains(".mp4") && !url.Contains(".webm") && !url.Contains(".gif") && SettingsModel.Images)
+                        else if (fileExtension != ".mp4" && fileExtension != ".webm" && fileExtension != ".gif" && SettingsModel.Images)
                         {
                             DownloadService.Download(url, Path.Combine(path, "Images", filename));
                         }

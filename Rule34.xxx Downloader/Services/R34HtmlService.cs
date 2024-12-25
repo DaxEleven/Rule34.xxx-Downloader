@@ -3,6 +3,7 @@ using R34Downloader.Models;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace R34Downloader.Services
 {
@@ -172,6 +173,8 @@ namespace R34Downloader.Services
                 var reportStatus = pid + i + 1;
                 progress.Report(reportStatus);
                 progress2.Report(reportStatus);
+
+                Thread.Sleep(100);
             }
         }
 

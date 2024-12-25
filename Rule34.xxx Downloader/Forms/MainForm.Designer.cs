@@ -80,7 +80,7 @@
             this.label1.Size = new System.Drawing.Size(766, 54);
             this.label1.TabIndex = 100;
             this.label1.Text = "This is an unofficial application. Used official API\r\nAll Rights Reserved © 2017-" +
-    "2023";
+    "2025";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // folderBrowserDialog1
@@ -235,7 +235,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Rule34.xxx Downloader 1.0.3";
+            this.Text = "Rule34.xxx Downloader 1.0.4";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

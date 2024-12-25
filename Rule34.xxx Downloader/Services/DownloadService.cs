@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Net;
+using System.Net.Http;
 
 namespace R34Downloader.Services
 {
@@ -25,11 +25,15 @@ namespace R34Downloader.Services
                     Directory.CreateDirectory(directory);
                 }
 
-                using (var client = new WebClient())
+                using (var client = new HttpClient())
                 {
                     try
                     {
-                        client.DownloadFile(url, filePath);
+                        var response = client.GetAsync(url).Result;
+                        response.EnsureSuccessStatusCode();
+
+                        var data = response.Content.ReadAsByteArrayAsync().Result;
+                        File.WriteAllBytes(filePath, data);
                     }
                     catch
                     {
