@@ -1,4 +1,4 @@
-# Rule34.xxx Downloader v.1.0.4
+# Rule34.xxx Downloader v.1.0.5
 
 Application for downloading content from site Rule34.xxx. Allows you to download both images and videos. Downloading is possible both through the API and through HTML parsing (if the API is unavailable for some reason). To search, you can use the same system as on the website, where you can configure filtering using a special syntax and keywords.
 
