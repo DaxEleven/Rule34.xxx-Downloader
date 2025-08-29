@@ -52,20 +52,18 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(18, 386);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox1.Location = new System.Drawing.Point(12, 251);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(728, 35);
+            this.textBox1.Size = new System.Drawing.Size(487, 26);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "overwatch animated";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(153, 435);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Location = new System.Drawing.Point(102, 283);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(226, 52);
+            this.button1.Size = new System.Drawing.Size(151, 34);
             this.button1.TabIndex = 2;
             this.button1.Text = "Search";
             this.button1.UseVisualStyleBackColor = true;
@@ -74,10 +72,9 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 557);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(0, 362);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(766, 54);
+            this.label1.Size = new System.Drawing.Size(511, 35);
             this.label1.TabIndex = 100;
             this.label1.Text = "This is an unofficial application. Used official API\r\nAll Rights Reserved © 2017-" +
     "2025";
@@ -90,10 +87,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(388, 435);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button2.Location = new System.Drawing.Point(259, 283);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(226, 52);
+            this.button2.Size = new System.Drawing.Size(151, 34);
             this.button2.TabIndex = 3;
             this.button2.Text = "Download";
             this.button2.UseVisualStyleBackColor = true;
@@ -107,10 +103,9 @@
             this.toolStripStatusLabel1,
             this.toolStripProgressBar1,
             this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 670);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 434);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(766, 30);
+            this.statusStrip1.Size = new System.Drawing.Size(511, 30);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
@@ -121,30 +116,29 @@
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(146, 23);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(146, 25);
             this.toolStripStatusLabel1.Text = "Downloading content...";
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(399, 22);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(266, 24);
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.AutoSize = false;
             this.toolStripStatusLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(95, 23);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(95, 25);
             this.toolStripStatusLabel2.Text = "12578 / 12542";
             // 
             // linkLabel1
             // 
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(153)))));
-            this.linkLabel1.Location = new System.Drawing.Point(220, 611);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel1.Location = new System.Drawing.Point(147, 397);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(327, 26);
+            this.linkLabel1.Size = new System.Drawing.Size(218, 17);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "rule34.xxx";
@@ -154,10 +148,9 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(388, 497);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button3.Location = new System.Drawing.Point(259, 323);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(159, 38);
+            this.button3.Size = new System.Drawing.Size(106, 25);
             this.button3.TabIndex = 5;
             this.button3.Text = "About";
             this.button3.UseVisualStyleBackColor = true;
@@ -166,10 +159,9 @@
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(220, 497);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button4.Location = new System.Drawing.Point(147, 323);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(159, 38);
+            this.button4.Size = new System.Drawing.Size(106, 25);
             this.button4.TabIndex = 4;
             this.button4.Text = "Search help";
             this.button4.UseVisualStyleBackColor = true;
@@ -179,10 +171,9 @@
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox2.Image = global::R34Downloader.Properties.Resources.settings;
-            this.pictureBox2.Location = new System.Drawing.Point(705, 611);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox2.Location = new System.Drawing.Point(470, 397);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(48, 49);
+            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
             this.pictureBox2.TabIndex = 101;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
@@ -191,9 +182,8 @@
             // 
             this.pictureBox1.Image = global::R34Downloader.Properties.Resources.header;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(766, 377);
+            this.pictureBox1.Size = new System.Drawing.Size(511, 245);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -202,10 +192,9 @@
             // 
             this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(153)))));
-            this.linkLabel2.Location = new System.Drawing.Point(220, 637);
-            this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel2.Location = new System.Drawing.Point(147, 414);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(327, 27);
+            this.linkLabel2.Size = new System.Drawing.Size(218, 18);
             this.linkLabel2.TabIndex = 102;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "app page";
@@ -214,10 +203,10 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(229)))), ((int)(((byte)(164)))));
-            this.ClientSize = new System.Drawing.Size(766, 700);
+            this.ClientSize = new System.Drawing.Size(511, 464);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button4);
@@ -231,11 +220,10 @@
             this.Controls.Add(this.textBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Rule34.xxx Downloader 1.0.4";
+            this.Text = "Rule34.xxx Downloader 1.0.5";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

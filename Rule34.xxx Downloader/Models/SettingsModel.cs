@@ -1,10 +1,11 @@
-﻿namespace R34Downloader.Models
+namespace R34Downloader.Models
 {
     /// <summary>
     /// Settings DTO model.
     /// </summary>
     public static class SettingsModel
     {
+        public static string APICreds { get; set; }
         /// <summary>
         /// Limit
         /// </summary>

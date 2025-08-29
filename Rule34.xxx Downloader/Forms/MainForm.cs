@@ -29,10 +29,14 @@ namespace R34Downloader.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string savedValue = Properties.Settings.Default.APICreds;
             SettingsModel.IsApi = true;
             toolStripStatusLabel1.Text = "Welcome!";
             toolStripStatusLabel2.Text = "0 / 0";
-
+            if (!string.IsNullOrEmpty(savedValue))
+            {
+                SettingsModel.APICreds = savedValue;
+            }
             if (!string.IsNullOrEmpty(Properties.Settings.Default.Path))
             {
                 folderBrowserDialog1.SelectedPath = Properties.Settings.Default.Path;
@@ -59,19 +63,27 @@ namespace R34Downloader.Forms
                 var request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
                 if (SettingsModel.IsApi)
                 {
-                    var countContent = R34ApiService.GetContentCount(request);
-                    if (countContent > 0)
+                    if (R34ApiService.GetAPICrendential())
                     {
-                        toolStripStatusLabel1.Text = "Search completed";
-                        if (MessageBox.Show(countContent + " results found. Open in a browser?", "Searching results", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-                        {
-                            Process.Start("https://rule34.xxx/index.php?page=post&s=list&tags=" + request);
-                        }
-                    }
+                        toolStripStatusLabel1.Text = "API Credential Missing";
+                        MessageBox.Show("Due to Rule34 making changes to their API,\nYou will need to get your own API Credential\nbefore you can use this tool.", "API Missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    } 
                     else
                     {
-                        toolStripStatusLabel1.Text = "Search completed";
-                        MessageBox.Show("Nobody here but us chickens!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var countContent = R34ApiService.GetContentCount(request);
+                        if (countContent > 0)
+                        {
+                            toolStripStatusLabel1.Text = "Search completed";
+                            if (MessageBox.Show(countContent + " results found. Open in a browser?", "Searching results", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            {
+                                Process.Start("https://rule34.xxx/index.php?page=post&s=list&tags=" + request);
+                            }
+                        }
+                        else
+                        {
+                            toolStripStatusLabel1.Text = "Search completed";
+                            MessageBox.Show("Nobody here but us chickens!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
                 else // If parsing method
@@ -114,37 +126,44 @@ namespace R34Downloader.Forms
                 var request = textBox1.Text.Replace(' ', '+').Replace("*", "%2a");
                 if (SettingsModel.IsApi)
                 {
-                    var countContent = R34ApiService.GetContentCount(request);
-                    if (countContent > 0)
+                    if (R34ApiService.GetAPICrendential())
                     {
-                        if (folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
+                        toolStripStatusLabel1.Text = "API Credential Missing";
+                        MessageBox.Show("Due to Rule34 making changes to their API,\nYou will need to get your own API Credential\nbefore you can use this tool.", "API Missing", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    } else
+                    {
+                        var countContent = R34ApiService.GetContentCount(request);
+                        if (countContent > 0)
                         {
-                            Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
-                            Properties.Settings.Default.Save();
-
-                            var downloadingForm = new DownloadingForm((ushort)countContent);
-                            downloadingForm.ShowDialog();
-
-                            if (SettingsModel.Limit > 0)
+                            if (folderBrowserDialog1.ShowDialog() != DialogResult.Cancel)
                             {
-                                toolStripStatusLabel1.Text = "Downloading content...";
-                                toolStripProgressBar1.Maximum = SettingsModel.Limit;
+                                Properties.Settings.Default.Path = folderBrowserDialog1.SelectedPath;
+                                Properties.Settings.Default.Save();
 
-                                var progress = new Progress<int>(s => toolStripProgressBar1.Value = s);
-                                var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + SettingsModel.Limit);
-                                await Task.Factory.StartNew(() => R34ApiService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2), TaskCreationOptions.LongRunning);
+                                var downloadingForm = new DownloadingForm((ushort)countContent);
+                                downloadingForm.ShowDialog();
 
-                                toolStripStatusLabel1.Text = "Download completed";
-                                if (MessageBox.Show("Download completed! Open the folder?", "Download completed", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                                if (SettingsModel.Limit > 0)
                                 {
-                                    Process.Start(folderBrowserDialog1.SelectedPath);
+                                    toolStripStatusLabel1.Text = "Downloading content...";
+                                    toolStripProgressBar1.Maximum = SettingsModel.Limit;
+
+                                    var progress = new Progress<int>(s => toolStripProgressBar1.Value = s);
+                                    var progress2 = new Progress<int>(s => toolStripStatusLabel2.Text = s + " / " + SettingsModel.Limit);
+                                    await Task.Factory.StartNew(() => R34ApiService.DownloadContent(folderBrowserDialog1.SelectedPath, request, SettingsModel.Limit, progress, progress2), TaskCreationOptions.LongRunning);
+
+                                    toolStripStatusLabel1.Text = "Download completed";
+                                    if (MessageBox.Show("Download completed! Open the folder?", "Download completed", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                                    {
+                                        Process.Start(folderBrowserDialog1.SelectedPath);
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Nobody here but us chickens!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        else
+                        {
+                            MessageBox.Show("Nobody here but us chickens!", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
                 else // If parsing method

@@ -19,7 +19,10 @@ namespace R34Downloader.Services
         #endregion
 
         #region Methods
-
+        public static bool GetAPICrendential()
+        {
+            return string.IsNullOrEmpty(SettingsModel.APICreds);
+        }
         /// <summary>
         /// Returns the amount of content for the given tags.
         /// </summary>
@@ -28,7 +31,7 @@ namespace R34Downloader.Services
         public static int GetContentCount(string tags)
         {
             var document = new XmlDocument();
-            document.Load($"{ApiUrl}&tags={tags}");
+            document.Load($"{ApiUrl}&tags={tags}{SettingsModel.APICreds.ToString()}");
 
             return int.TryParse(document.DocumentElement?.Attributes[0].Value, out var count) ? count : default;
         }
@@ -48,7 +51,7 @@ namespace R34Downloader.Services
             for (var pid = 0; pid <= maxPid; pid++)
             {
                 var doc = new XmlDocument();
-                doc.Load($"{ApiUrl}&tags={tags}&pid={pid}");
+                doc.Load($"{ApiUrl}&tags={tags}&pid={pid}{SettingsModel.APICreds.ToString()}");
 
                 var postCount = quantity - pid * PageSize < PageSize ? quantity - pid * PageSize : PageSize;
                 for (var i = 0; i < postCount; i++)
