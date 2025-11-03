@@ -29,7 +29,7 @@ namespace R34Downloader.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SettingsModel.IsApi = true;
+            SettingsModel.IsApi = false;
             toolStripStatusLabel1.Text = "Welcome!";
             toolStripStatusLabel2.Text = "0 / 0";
 

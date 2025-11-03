@@ -3,6 +3,7 @@ using R34Downloader.Models;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace R34Downloader.Services
@@ -77,7 +78,7 @@ namespace R34Downloader.Services
                 return pid + nodes.Count;
             }
 
-            return -1;
+            return ushort.MaxValue;
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace R34Downloader.Services
                 var document = LoadHtmlDocument($"https://rule34.xxx/{posts[i]}");
 
                 var videoNode = document.DocumentNode.SelectSingleNode("//video[@id='gelcomVideoPlayer']/source");
-                var imageNode = document.DocumentNode.SelectSingleNode("//div[@class='content']//img[@id='image']");
+                var imageNode = document.DocumentNode.SelectSingleNode("//meta[@property='og:image']");
 
                 if (videoNode != null && SettingsModel.Video)
                 {
@@ -152,7 +153,7 @@ namespace R34Downloader.Services
                 }
                 else
                 {
-                    var imageUrl = imageNode?.GetAttributeValue("src", null);
+                    var imageUrl = imageNode?.GetAttributeValue("content", null);
                     if (imageUrl != null)
                     {
                         var id = imageUrl.Split('?')[1];
@@ -180,7 +181,42 @@ namespace R34Downloader.Services
 
         private static HtmlDocument LoadHtmlDocument(string url)
         {
-            return new HtmlWeb().Load(url);
+            var htmlWeb = new HtmlWeb
+            {
+                PreRequest = request =>
+                {
+                    if (request != null)
+                    {
+                        request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
+                        request.Referer = "https://rule34.xxx/";
+                        request.Host = "rule34.xxx";
+
+                        request.CookieContainer = new CookieContainer();
+
+                        request.CookieContainer.Add(new Cookie
+                        {
+                            Name = "gdpr",
+                            Value = "1",
+                            Domain = "rule34.xxx",
+                            Path = "/",
+                            Expires = DateTime.Now.AddYears(1)
+                        });
+
+                        request.CookieContainer.Add(new Cookie
+                        {
+                            Name = "gdpr-consent",
+                            Value = "1",
+                            Domain = "rule34.xxx",
+                            Path = "/",
+                            Expires = DateTime.Now.AddYears(1)
+                        });
+                    }
+
+                    return true;
+                }
+            };
+
+            return htmlWeb.Load(url);
         }
 
         #endregion

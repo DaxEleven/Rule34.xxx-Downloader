@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 
 namespace R34Downloader.Services
@@ -19,14 +21,41 @@ namespace R34Downloader.Services
         {
             if (!File.Exists(filePath))
             {
-                var directory = filePath.Substring(0, filePath.LastIndexOf(Path.DirectorySeparatorChar));
-                if (!Directory.Exists(directory))
+                var directory = Path.GetDirectoryName(filePath);
+                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
 
-                using (var client = new HttpClient())
+                var handler = new HttpClientHandler
                 {
+                    UseCookies = true,
+                    CookieContainer = new CookieContainer()
+                };
+
+                handler.CookieContainer.Add(new Cookie
+                {
+                    Name = "gdpr",
+                    Value = "1",
+                    Domain = "rule34.xxx",
+                    Path = "/",
+                    Expires = DateTime.Now.AddYears(1)
+                });
+
+                handler.CookieContainer.Add(new Cookie
+                {
+                    Name = "gdpr-consent",
+                    Value = "1",
+                    Domain = "rule34.xxx",
+                    Path = "/",
+                    Expires = DateTime.Now.AddYears(1)
+                });
+
+                using (var client = new HttpClient(handler))
+                {
+                    client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36");
+                    client.DefaultRequestHeaders.Referrer = new Uri("https://rule34.xxx/");
+
                     try
                     {
                         var response = client.GetAsync(url).Result;
