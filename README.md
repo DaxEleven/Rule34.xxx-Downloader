@@ -1,19 +1,21 @@
-# Rule34.xxx Downloader v.1.0.4
+# Rule34.xxx Downloader v.1.0.5
 
-Application for downloading content from site Rule34.xxx. Allows you to download both images and videos. Downloading is possible both through the API and through HTML parsing (if the API is unavailable for some reason). To search, you can use the same system as on the website, where you can configure filtering using a special syntax and keywords.
+An application for downloading content from the site Rule34.xxx. It allows you to download both images and videos. Downloading is possible either via the official API or through HTML parsing (if the API is unavailable for any reason).
 
-### Download: [R34Downloader.zip](https://github.com/DaxEleven/Rule34.xxx-Downloader/releases/download/1.0.4/R34Downloader.zip)
+For search, you can use the same system as on the website, which allows you to configure filters using a special syntax and keywords.
 
-###### Requires [.NET Framework 4.8.1 (runtime)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481) *most likely you have this unless you are that ancient dinosaur that uses Windows 7 without updates
+### Download: [R34Downloader.zip](https://github.com/DaxEleven/Rule34.xxx-Downloader/releases/download/1.0.5/R34Downloader.zip)
+
+###### Requires [.NET Framework 4.8.1 (runtime)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481) *you most likely already have this installed, unless you're an ancient dinosaur using Windows 7 without updates*
 
 ---
 
-Although using a certain filter when searching you can get safe content (`rating:safe`), basically the application allows you to access erotic and/or pornographic content. Use it at your own risk, taking into account the laws of the country in which you are located.
+While using a specific filter (e.g., `rating:safe`) can yield safe content, the application primarily provides access to erotic and/or pornographic material. Use it at your own risk and in compliance with the laws of your country.
 
 ---
 
 # Screenshots
-![image](https://github.com/user-attachments/assets/c9382068-f449-42ef-8567-85bdcb9aeddf)
+<img width="513" height="462" alt="image" src="https://github.com/user-attachments/assets/225ed476-c515-423c-8032-993dc8d27293" />
 
 ![image](https://github.com/user-attachments/assets/f505f0c9-4d9d-4019-90d7-de0ee6d0d35a)
 
