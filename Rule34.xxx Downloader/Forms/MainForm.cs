@@ -192,7 +192,7 @@ namespace R34Downloader.Forms
 
         private void button3_Click(object sender, EventArgs e) // About Button
         {
-            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: Dax Eleven\nVersion: 1.0.4", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The author has nothing to do with the rule34.xxx\nAuthor: Dax Eleven\nVersion: 1.0.5", "About Rule34.xxx Downloader", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button4_Click(object sender, EventArgs e) // Help Button
