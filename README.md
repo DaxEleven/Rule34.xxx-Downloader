@@ -15,7 +15,7 @@ While using a specific filter (e.g., `rating:safe`) can yield safe content, the 
 ---
 
 # Screenshots
-<img width="513" height="462" alt="image" src="https://github.com/user-attachments/assets/225ed476-c515-423c-8032-993dc8d27293" />
+![image](https://github.com/user-attachments/assets/225ed476-c515-423c-8032-993dc8d27293)
 
 ![image](https://github.com/user-attachments/assets/f505f0c9-4d9d-4019-90d7-de0ee6d0d35a)
 
