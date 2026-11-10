@@ -13,9 +13,7 @@ The application works through the official [rule34.xxx API](https://api.rule34.x
 
 # Screenshots
 
-![image](https://github.com/user-attachments/assets/225ed476-c515-423c-8032-993dc8d27293)
-![image](https://github.com/user-attachments/assets/f505f0c9-4d9d-4019-90d7-de0ee6d0d35a)
-![image](https://github.com/user-attachments/assets/8ce7044b-891b-4008-8090-247c223bf71c)
+<img alt="app main screen" src="https://github.com/user-attachments/assets/a94da598-075f-41ef-9628-d69e5dbdc3f1" />
 
 ## Download
 
