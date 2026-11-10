@@ -9,6 +9,11 @@
     <RootNamespace>R34Downloader</RootNamespace>
     <AssemblyName>R34Downloader</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=/_/</PathMap>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -23,17 +28,18 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://github.com/Dax-Eleven/Rule34.xxx-Downloader</SupportUrl>
-    <ErrorReportUrl>https://github.com/Dax-Eleven/Rule34.xxx-Downloader</ErrorReportUrl>
+    <SupportUrl>https://github.com/DaxEleven/Rule34.xxx-Downloader</SupportUrl>
+    <ErrorReportUrl>https://github.com/DaxEleven/Rule34.xxx-Downloader</ErrorReportUrl>
     <TargetCulture>en</TargetCulture>
     <PublisherName>Dax Eleven</PublisherName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.3.0</ApplicationVersion>
+    <ApplicationVersion>1.1.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -44,7 +50,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -55,9 +62,6 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.12.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.12.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -85,9 +89,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DownloadControlService.cs" />
+    <Compile Include="Services\DownloadedFilesCache.cs" />
     <Compile Include="Services\DownloadService.cs" />
+    <Compile Include="Services\HttpClientHelper.cs" />
+    <Compile Include="Services\PortableSettings.cs" />
+    <Compile Include="Services\RetryPolicy.cs" />
     <Compile Include="Services\R34ApiService.cs" />
-    <Compile Include="Services\R34HtmlService.cs" />
+    <Compile Include="Services\R34Exception.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
@@ -114,19 +124,7 @@
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
